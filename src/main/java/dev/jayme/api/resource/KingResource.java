@@ -27,7 +27,7 @@ public class KingResource {
 	public ResponseEntity<Page<King>> listKings(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "2") Integer size) {
 		var pageable = PageRequest.of(page, size);
-		var kings = this.repository.findAll(pageable);
+		var kings = this.repository.findAll(pageable); //Query Method
 		var kings2 = this.repository.findByCriteria(pageable);
 		return ResponseEntity.ok(kings2);
 	}

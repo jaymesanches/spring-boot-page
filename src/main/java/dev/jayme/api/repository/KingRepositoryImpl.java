@@ -15,6 +15,7 @@ public class KingRepositoryImpl implements KingRepositoryQuery {
 	
 	@Autowired
 	public KingRepositoryImpl(EntityManager em) {
+		super();
 		this.em = em;
 	}
 
@@ -22,11 +23,12 @@ public class KingRepositoryImpl implements KingRepositoryQuery {
 	public Page<King> findByCriteria(Pageable pageable) {
 		var builder = em.getCriteriaBuilder();
 		var query = builder.createQuery(King.class);
+		query.from(King.class);
 		var typedQuery = em.createQuery(query);
 		typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
 		typedQuery.setMaxResults(pageable.getPageSize());
 		var result = typedQuery.getResultList();
-		return new PageImpl<>(result, pageable, countKings());
+		return new PageImpl<King>(result, pageable, countKings());
 	}
 
 	private Long countKings() {
